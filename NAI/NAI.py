@@ -20,3 +20,8 @@ while(True):
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
     closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
     cv2.imshow("Closed", closed) 
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cv2.imwrite("test.jpg", closed)
