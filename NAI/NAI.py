@@ -13,3 +13,10 @@ while(True):
     small = cv2.resize(gray, (0, 0), fx=0.5, fy=0.5)
 
     cv2.imshow('frame', gray)
+
+    edged = cv2.Canny(gray, 10, 250)
+    cv2.imshow("Edged", edged)
+
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
+    closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
+    cv2.imshow("Closed", closed) 
