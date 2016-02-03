@@ -33,3 +33,8 @@ for c in cnts:
 	if len(approx) == 4:
 		cv2.drawContours(image, [approx], -1, (0, 255, 0), 4)
 		total += 1
+
+if total == 0:
+        print "Nie znaleziono ksiazki"
+if total != 0:
+        print "Znaleiono ksiazki - {0} ".format(total)
