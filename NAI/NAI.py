@@ -38,3 +38,9 @@ if total == 0:
         print "Nie znaleziono ksiazki"
 if total != 0:
         print "Znaleiono ksiazki - {0} ".format(total)
+
+cv2.imshow("Output", image)
+
+cv2.waitKey(0)
+cap.release()
+cv2.destroyAllWindows()
