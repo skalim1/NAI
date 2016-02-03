@@ -25,3 +25,11 @@ while(True):
         break
 
 cv2.imwrite("test.jpg", closed)
+
+for c in cnts:
+	peri = cv2.arcLength(c, True)
+	approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+
+	if len(approx) == 4:
+		cv2.drawContours(image, [approx], -1, (0, 255, 0), 4)
+		total += 1
