@@ -8,18 +8,23 @@ while(True):
     ret, frame = cap.read()
 
     # Wyświetlenie klatki z kamerki
-#    cv2.imshow("image", frame)
+#    cv2.imshow("Original", frame)
 
     # Konwersja przestrzeni barw do skali szarosci oraz zmiana wielkosci obrazu
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray, (3, 3), 0)
-    small = cv2.resize(gray, (0, 0), fx=0.5, fy=0.5)
+    # Rozmazanie szarej klatki
+    blur = cv2.GaussianBlur(gray, (3, 3), 0)
+
+#    small = cv2.resize(blur, (0, 0), fx=0.5, fy=0.5)
+    # Wyświetlenie zmiejszonego obrazu
+#    cv2.imshow("Small", small)
 
     # Wyświetlenie przekonwertowanej klatki
-    cv2.imshow('frame', gray)
+    cv2.imshow("Blur", blur)
+#    cv2.imshow("Gray", gray)
 
     # Wykrywanie krawedzi (usuniecie szumu-filtr Gausa, wygładzenie, maksimum lokalne)
-    edged = cv2.Canny(gray, 10, 250)
+    edged = cv2.Canny(blur, 10, 255)
 #    cv2.imshow("Edged", edged)
 
     # Zamkniecie luk pomiedzy bialymi pikselami
@@ -44,21 +49,21 @@ for c in cnts:
 	peri = cv2.arcLength(c, True)
 	approx = cv2.approxPolyDP(c, 0.02 * peri, True)
 
-    # Wskazanie ksiazki jak liczba katow jest rowna 4
+    # Wskazanie ksiazki jak liczba katow jest rowna 4, rysowanie kontorow
 	if len(approx) == 4:
-		cv2.drawContours(image, [approx], -1, (0, 255, 0), 4)
+		cv2.drawContours(image, [approx], 0, (0, 255, 0), 3)
 		total += 1
 
 # Wyswietlenie wyniku liczenia
 if total == 0:
         print "Nie znaleziono ksiazki"
 if total != 0:
-        print "Znaleiono ksiazki - {0} ".format(total)
+        print "Znaleiono ksiazki - {0} szt.".format(total)
 
 # Wyswietlenie klatki z zaznaczonymi konturami ksiazki
 cv2.imshow("Output", image)
 
-# Zwolnienie zasobow kmerki, wylaczenie wszystkich okienek
+# Zwolnienie zasobow kamerki, wylaczenie wszystkich okienek
 cv2.waitKey(0)
 cap.release()
 cv2.destroyAllWindows()
